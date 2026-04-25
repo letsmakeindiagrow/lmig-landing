@@ -1630,9 +1630,59 @@
       }
 
       if (valid) {
-        // Simulate success
-        document.getElementById('contact-form').style.display = 'none';
-        document.getElementById('form-success').style.display = 'block';
+        // ── Brevo (Sendinblue) transactional email ────────────────
+        const BREVO_API_KEY  = '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';   // 🔑 Replace with your Brevo API key
+        const TO_EMAIL       = 'letsmakeindiagrow@gmail.com'; // 📩 Email where you want to receive submissions
+        const FROM_EMAIL     = 'no-reply@lmig.in';             // 📤 Must be a verified sender in Brevo
+        const FROM_NAME      = 'AlphaLense Contact Form';
+
+        const submitBtn = document.querySelector('#contact-form button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+
+        const payload = {
+          sender: { name: FROM_NAME, email: FROM_EMAIL },
+          to: [{ email: TO_EMAIL, name: 'Let\'s Make India Grow' }],
+          replyTo: { email: email.value.trim(), name: name.value.trim() },
+          subject: `New Contact Form Submission from ${name.value.trim()}`,
+          htmlContent: `
+            <h2 style="color:#1A56DB;font-family:sans-serif;">New message from AlphaLense Contact Form</h2>
+            <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:15px;">
+              <tr><td style="padding:10px;border:1px solid #E2E8F0;background:#F8FAFF;font-weight:bold;width:160px;">Full Name</td>
+                  <td style="padding:10px;border:1px solid #E2E8F0;">${name.value.trim()}</td></tr>
+              <tr><td style="padding:10px;border:1px solid #E2E8F0;background:#F8FAFF;font-weight:bold;">Mobile</td>
+                  <td style="padding:10px;border:1px solid #E2E8F0;">${mobile.value.trim()}</td></tr>
+              <tr><td style="padding:10px;border:1px solid #E2E8F0;background:#F8FAFF;font-weight:bold;">Email</td>
+                  <td style="padding:10px;border:1px solid #E2E8F0;"><a href="mailto:${email.value.trim()}">${email.value.trim()}</a></td></tr>
+              <tr><td style="padding:10px;border:1px solid #E2E8F0;background:#F8FAFF;font-weight:bold;">Query / Suggestion</td>
+                  <td style="padding:10px;border:1px solid #E2E8F0;">${query.value.trim().replace(/\n/g, '<br>')}</td></tr>
+            </table>
+            <p style="font-size:12px;color:#94A3B8;margin-top:24px;">Sent from AlphaLense contact form at www.lmig.in</p>
+          `
+        };
+
+        fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'api-key': BREVO_API_KEY
+          },
+          body: JSON.stringify(payload)
+        })
+        .then(res => {
+          if (res.ok) {
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('form-success').style.display = 'block';
+          } else {
+            return res.json().then(err => { throw new Error(err.message || 'API error'); });
+          }
+        })
+        .catch(err => {
+          console.error('Brevo error:', err);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message →';
+          alert('Oops! Something went wrong. Please try again or email us directly at letsmakeindiagrow@gmail.com');
+        });
       }
     });
 
