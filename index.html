@@ -3,1703 +3,864 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AlphaLense — Disciplined Investing for Every Indian | Let's Make India Grow</title>
-  <meta name="description" content="AlphaLense is a free, open-source investing MVP by Let's Make India Grow. Rule-based strategy backtesting, disciplined market thinking, and financial learning — built for ordinary Indians." />
-  <meta name="keywords" content="investing, trading, backtesting, open source, India, financial planning, AlphaLense, LMIG" />
-  <meta property="og:title" content="AlphaLense by Let's Make India Grow" />
-  <meta property="og:description" content="A free, open-source tool for disciplined, rule-based investing. Built in public for every Indian investor." />
-  <meta property="og:url" content="https://www.lmig.in" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
+  <title>LMIG — Let's Make India Grow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ═══════════════════════════════════════════
-       CSS VARIABLES & RESET
-    ═══════════════════════════════════════════ */
     :root {
-      --bg:         #F8FAFF;
+      --emerald:    #00A86B;
+      --emerald-lt: #E6F7F1;
+      --emerald-md: #B2E8D5;
+      --saffron:    #FF6B00;
+      --saffron-lt: #FFF0E6;
+      --navy:       #0A2540;
+      --navy-md:    #1A3A5C;
+      --sky:        #E8F4FD;
+      --gold:       #F5A623;
+      --gold-lt:    #FFF8E7;
       --white:      #FFFFFF;
-      --blue:       #1A56DB;
-      --blue-light: #EEF2FF;
-      --blue-dark:  #1341B3;
-      --green:      #059669;
-      --green-light:#F0FDF4;
-      --teal:       #0891B2;
-      --teal-light: #ECFEFF;
-      --text:       #0F172A;
-      --soft:       #475569;
-      --muted:      #94A3B8;
-      --border:     #E2E8F0;
-      --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-      --shadow-md:  0 4px 16px rgba(15,23,42,.08);
-      --shadow-lg:  0 8px 32px rgba(15,23,42,.10);
-      --radius:     12px;
-      --radius-lg:  20px;
+      --offwhite:   #F7FAFA;
+      --text-dark:  #0A2540;
+      --text-mid:   #4A6280;
+      --text-soft:  #8BA0B8;
+      --border:     #DDE8EF;
+      --shadow-sm:  0 2px 12px rgba(10,37,64,.07);
+      --shadow-md:  0 8px 32px rgba(10,37,64,.10);
+      --shadow-lg:  0 24px 64px rgba(10,37,64,.13);
+      --radius:     16px;
     }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    img { max-width: 100%; display: block; }
-    a { text-decoration: none; color: inherit; }
-
-    /* ═══════════════════════════════════════════
-       UTILITY CLASSES
-    ═══════════════════════════════════════════ */
-    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-    .section { padding: 96px 0; }
-    .section-sm { padding: 64px 0; }
-    .tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--blue-light); color: var(--blue);
-      font-size: 12px; font-weight: 600; letter-spacing: .6px;
-      text-transform: uppercase; padding: 5px 12px;
-      border-radius: 100px; margin-bottom: 16px;
-    }
-    .tag.green { background: var(--green-light); color: var(--green); }
-    .tag.teal  { background: var(--teal-light);  color: var(--teal);  }
-    .section-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 800; line-height: 1.2;
-      color: var(--text); margin-bottom: 14px;
-    }
-    .section-sub {
-      font-size: 17px; color: var(--soft);
-      max-width: 560px; line-height: 1.7;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 26px; border-radius: 100px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 15px; font-weight: 700;
-      border: none; cursor: pointer;
-      transition: all .2s ease;
-    }
-    .btn-primary {
-      background: var(--blue); color: #fff;
-      box-shadow: 0 4px 14px rgba(26,86,219,.35);
-    }
-    .btn-primary:hover {
-      background: var(--blue-dark);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(26,86,219,.45);
-    }
-    .btn-green {
-      background: var(--green); color: #fff;
-      box-shadow: 0 4px 14px rgba(5,150,105,.3);
-    }
-    .btn-green:hover {
-      background: #047857;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(5,150,105,.4);
-    }
-    .btn-outline {
-      background: transparent; color: var(--blue);
-      border: 2px solid var(--blue);
-    }
-    .btn-outline:hover {
-      background: var(--blue-light);
-      transform: translateY(-1px);
-    }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-
-    /* ═══════════════════════════════════════════
-       SCROLL REVEAL ANIMATION
-    ═══════════════════════════════════════════ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: .1s; }
-    .reveal-delay-2 { transition-delay: .2s; }
-    .reveal-delay-3 { transition-delay: .3s; }
-    .reveal-delay-4 { transition-delay: .4s; }
-
-    /* ═══════════════════════════════════════════
-       HEADER / NAV
-    ═══════════════════════════════════════════ */
-    header {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(248,250,255,.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      transition: box-shadow .3s;
-    }
-    header.scrolled { box-shadow: var(--shadow-md); }
-    nav {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 16px 0;
-    }
-    .brand { display: flex; flex-direction: column; gap: 1px; }
-    .brand-main {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 15px; font-weight: 800;
-      color: var(--blue); letter-spacing: -.2px;
-    }
-    .brand-sub {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 11px; font-weight: 600;
-      color: var(--soft); letter-spacing: .5px;
-      text-transform: uppercase;
-    }
-    .brand-dot { color: var(--green); }
-    .nav-links {
-      display: flex; align-items: center; gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 14px; font-weight: 500; color: var(--soft);
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--blue); }
-    .nav-cta { display: flex; align-items: center; gap: 12px; }
-    .hamburger {
-      display: none; flex-direction: column; gap: 5px;
-      cursor: pointer; padding: 4px;
-      background: none; border: none;
-    }
-    .hamburger span {
-      display: block; width: 22px; height: 2px;
-      background: var(--text); border-radius: 2px;
-      transition: all .3s;
-    }
-    .mobile-menu {
-      display: none; position: absolute; top: 100%;
-      left: 0; right: 0;
+      font-family: 'DM Sans', sans-serif;
       background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 20px 24px;
-      box-shadow: var(--shadow-md);
+      color: var(--text-dark);
+      overflow-x: hidden;
     }
-    .mobile-menu.open { display: block; }
-    .mobile-menu ul { list-style: none; }
-    .mobile-menu li { border-bottom: 1px solid var(--border); }
-    .mobile-menu a {
-      display: block; padding: 14px 0;
-      font-size: 15px; font-weight: 600; color: var(--text);
-    }
-    .mobile-menu .mobile-btns {
-      display: flex; flex-direction: column; gap: 10px; margin-top: 16px;
-    }
-    .mobile-menu .btn { width: 100%; justify-content: center; }
 
-    /* ═══════════════════════════════════════════
-       HERO SECTION
-    ═══════════════════════════════════════════ */
-    #home {
-      background: linear-gradient(135deg, #EEF2FF 0%, #F0FDF4 50%, #ECFEFF 100%);
-      padding: 80px 0 64px;
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatY {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes pulse-ring {
+      0%   { transform: scale(1);   opacity: .6; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+
+    .fade-up { animation: fadeUp .7s ease both; }
+    .delay-1 { animation-delay: .1s; }
+    .delay-2 { animation-delay: .22s; }
+    .delay-3 { animation-delay: .34s; }
+    .delay-4 { animation-delay: .46s; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px; text-decoration: none;
+    }
+    .logo-badge {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--emerald) 0%, #00C883 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 14px; color: white; letter-spacing: -.5px;
+      box-shadow: 0 4px 12px rgba(0,168,107,.35);
+    }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--navy); }
+    .logo-text span { color: var(--emerald); }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-size: 14px; font-weight: 500; color: var(--text-mid);
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--emerald); }
+    .nav-cta {
+      background: var(--emerald); color: white;
+      border: none; border-radius: 10px;
+      padding: 10px 22px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: all .2s; box-shadow: 0 4px 14px rgba(0,168,107,.3);
+    }
+    .nav-cta:hover { background: #008F59; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,168,107,.4); }
+
+    /* ── TICKER ── */
+    .ticker-bar {
+      background: var(--navy); color: white;
+      padding: 8px 0; overflow: hidden;
+      font-size: 13px; font-weight: 500;
+    }
+    .ticker-track {
+      display: flex; gap: 0;
+      animation: ticker 28s linear infinite;
+      white-space: nowrap; width: max-content;
+    }
+    .ticker-item {
+      padding: 0 40px; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .tick-up   { color: #4AE097; }
+    .tick-down { color: #FF6B6B; }
+    .tick-sep  { color: var(--text-soft); opacity: .4; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #F0FAFA 0%, #EAF6F1 40%, #FFF8EE 100%);
+      padding: 90px 5% 80px;
       position: relative; overflow: hidden;
     }
-    #home::before {
-      content: '';
-      position: absolute; top: -80px; right: -80px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(26,86,219,.06) 0%, transparent 70%);
+    .hero-bg-circle {
+      position: absolute;
       border-radius: 50%;
+      pointer-events: none;
     }
-    #home::after {
-      content: '';
-      position: absolute; bottom: -60px; left: -60px;
+    .hero-bg-circle.c1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,168,107,.08) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      animation: floatY 8s ease-in-out infinite;
+    }
+    .hero-bg-circle.c2 {
       width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(5,150,105,.06) 0%, transparent 70%);
-      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,107,0,.06) 0%, transparent 70%);
+      bottom: -80px; left: 5%;
+      animation: floatY 10s ease-in-out infinite reverse;
     }
     .hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px; align-items: center;
-      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
     }
-    .hero-badge {
+    .hero-tag {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,.8);
-      border: 1px solid var(--border);
-      border-radius: 100px; padding: 6px 14px;
-      font-size: 12px; font-weight: 600;
-      color: var(--soft); margin-bottom: 20px;
+      background: var(--emerald-lt); border: 1px solid var(--emerald-md);
+      border-radius: 100px; padding: 6px 16px;
+      font-size: 13px; font-weight: 600; color: var(--emerald);
+      margin-bottom: 20px;
     }
-    .hero-badge .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s infinite;
+    .hero-tag-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--emerald); position: relative;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .4; }
+    .hero-tag-dot::after {
+      content: ''; position: absolute;
+      inset: -3px; border-radius: 50%; border: 2px solid var(--emerald);
+      animation: pulse-ring 1.5s ease-out infinite;
     }
-    .hero-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(34px, 5vw, 54px);
-      font-weight: 800; line-height: 1.15;
-      letter-spacing: -.5px; margin-bottom: 20px;
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 900; line-height: 1.12;
+      color: var(--navy); margin-bottom: 20px;
+      letter-spacing: -.02em;
     }
-    .hero-title .highlight {
-      color: var(--blue);
-      position: relative; display: inline-block;
-    }
-    .hero-title .highlight::after {
-      content: '';
-      position: absolute; bottom: 2px; left: 0; right: 0;
-      height: 3px; border-radius: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--green));
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--emerald), #00C883);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .hero-sub {
-      font-size: 18px; color: var(--soft);
-      margin-bottom: 32px; line-height: 1.7;
+      font-size: 17px; color: var(--text-mid);
+      line-height: 1.7; margin-bottom: 36px; max-width: 480px;
     }
-    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
-    .hero-trust {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 13px; color: var(--muted);
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--emerald), #00C883);
+      color: white; border: none; border-radius: 12px;
+      padding: 14px 28px; font-size: 15px; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      box-shadow: 0 6px 20px rgba(0,168,107,.35);
+      transition: all .25s; display: inline-flex; align-items: center; gap: 8px;
     }
-    .hero-trust .icon { color: var(--green); font-size: 16px; }
-    .hero-visual {
-      display: flex; justify-content: center;
-      align-items: center;
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,168,107,.4); }
+    .btn-secondary {
+      background: white; color: var(--navy);
+      border: 1.5px solid var(--border); border-radius: 12px;
+      padding: 14px 28px; font-size: 15px; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: all .25s; display: inline-flex; align-items: center; gap: 8px;
     }
+    .btn-secondary:hover { border-color: var(--emerald); color: var(--emerald); transform: translateY(-2px); }
 
-    /* Dashboard mockup card */
-    .dash-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      padding: 24px;
-      width: 100%; max-width: 420px;
-      border: 1px solid var(--border);
-      position: relative;
+    /* Hero card */
+    .hero-card-wrap { position: relative; }
+    .hero-card {
+      background: white; border-radius: 24px;
+      box-shadow: var(--shadow-lg); padding: 28px;
+      animation: floatY 7s ease-in-out infinite;
     }
-    .dash-header {
-      display: flex; justify-content: space-between;
-      align-items: center; margin-bottom: 20px;
+    .hcard-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
     }
-    .dash-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 14px; font-weight: 700; color: var(--text);
+    .hcard-title { font-weight: 700; font-size: 15px; color: var(--navy); }
+    .hcard-badge {
+      background: var(--emerald-lt); color: var(--emerald);
+      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
     }
-    .dash-badge {
-      background: var(--green-light); color: var(--green);
-      font-size: 11px; font-weight: 700;
-      padding: 3px 10px; border-radius: 100px;
+    .hcard-chart {
+      display: flex; align-items: flex-end; gap: 6px;
+      height: 80px; margin-bottom: 20px;
     }
-    .dash-metrics {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px; margin-bottom: 20px;
+    .bar {
+      flex: 1; border-radius: 6px 6px 0 0;
+      background: linear-gradient(180deg, var(--emerald) 0%, var(--emerald-md) 100%);
+      transition: height .3s;
     }
-    .metric-box {
-      background: var(--bg); border-radius: 10px;
-      padding: 12px; text-align: center;
+    .bar.accent { background: linear-gradient(180deg, var(--saffron) 0%, #FFB366 100%); }
+    .hcard-stats {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
     }
-    .metric-val {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 16px; font-weight: 800;
-    }
-    .metric-val.up { color: var(--green); }
-    .metric-val.blue { color: var(--blue); }
-    .metric-val.teal { color: var(--teal); }
-    .metric-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
-
-    /* Sparkline chart */
-    .spark-area { margin-bottom: 16px; }
-    .spark-label {
-      font-size: 11px; color: var(--muted); margin-bottom: 8px;
-    }
-    .spark-svg { width: 100%; height: 64px; }
-
-    /* Lot rows */
-    .lot-row {
-      display: flex; justify-content: space-between;
-      align-items: center; padding: 10px 12px;
-      background: var(--bg); border-radius: 8px;
-      margin-bottom: 6px;
-    }
-    .lot-row:last-child { margin-bottom: 0; }
-    .lot-sym {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 13px; font-weight: 700;
-    }
-    .lot-date { font-size: 11px; color: var(--muted); margin-top: 1px; }
-    .lot-pnl {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 13px; font-weight: 700;
-    }
-    .lot-pnl.pos { color: var(--green); }
-    .lot-pnl.neg { color: #DC2626; }
-
-    /* Floating badge */
-    .float-badge {
-      position: absolute; bottom: -14px; right: 24px;
-      background: var(--white);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
-      border-radius: 12px; padding: 10px 16px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .float-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: var(--green-light);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-    }
-    .float-text { font-size: 11px; }
-    .float-text strong {
-      display: block; color: var(--text);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 12px; font-weight: 700;
-    }
-    .float-text span { color: var(--muted); }
-
-    /* ═══════════════════════════════════════════
-       WHY SECTION
-    ═══════════════════════════════════════════ */
-    #about { background: var(--white); }
-    .why-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 20px; margin-top: 48px;
-    }
-    .why-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .why-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-    .why-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      display: flex; align-items: center;
-      justify-content: center; font-size: 20px;
-      margin-bottom: 14px;
-    }
-    .why-card h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 17px; font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .why-card p { font-size: 14px; color: var(--soft); line-height: 1.65; }
-
-    /* ═══════════════════════════════════════════
-       WHAT IT DOES
-    ═══════════════════════════════════════════ */
-    #features { background: var(--bg); }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px; margin-top: 48px;
-    }
-    .feature-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: transform .2s, box-shadow .2s, border-color .2s;
-    }
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(26,86,219,.2);
-    }
-    .feature-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      display: flex; align-items: center;
-      justify-content: center; font-size: 22px;
-      margin-bottom: 16px;
-    }
-    .feature-card h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 16px; font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .feature-card p { font-size: 14px; color: var(--soft); line-height: 1.65; }
-
-    /* ═══════════════════════════════════════════
-       OPEN SOURCE SECTION
-    ═══════════════════════════════════════════ */
-    #open-source {
-      background: linear-gradient(135deg, #1A56DB 0%, #0891B2 100%);
-      position: relative; overflow: hidden;
-    }
-    #open-source::before {
-      content: '';
-      position: absolute; top: -100px; right: -100px;
-      width: 400px; height: 400px;
-      background: rgba(255,255,255,.06);
-      border-radius: 50%;
-    }
-    #open-source::after {
-      content: '';
-      position: absolute; bottom: -80px; left: -80px;
-      width: 300px; height: 300px;
-      background: rgba(255,255,255,.04);
-      border-radius: 50%;
-    }
-    .os-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 60px; align-items: center;
-      position: relative; z-index: 1;
-    }
-    .os-content .section-title { color: #fff; }
-    .os-content .section-sub { color: rgba(255,255,255,.75); }
-    .os-points { list-style: none; margin-top: 28px; }
-    .os-points li {
-      display: flex; align-items: flex-start; gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,.1);
-      font-size: 15px; color: rgba(255,255,255,.85);
-    }
-    .os-points li:last-child { border-bottom: none; }
-    .os-check {
-      width: 20px; height: 20px; border-radius: 50%;
-      background: rgba(255,255,255,.15);
-      display: flex; align-items: center;
-      justify-content: center; font-size: 11px;
-      flex-shrink: 0; margin-top: 1px; color: #fff;
-    }
-    .os-visual {
-      display: flex; justify-content: center;
-    }
-    .os-card {
-      background: rgba(255,255,255,.1);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: var(--radius-lg);
-      padding: 32px; width: 100%; max-width: 340px;
-      color: #fff;
-    }
-    .os-card-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 18px; font-weight: 800;
-      margin-bottom: 20px;
-    }
-    .os-stat-row {
-      display: flex; justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255,255,255,.1);
-      font-size: 14px;
-    }
-    .os-stat-row:last-child { border-bottom: none; }
-    .os-stat-label { color: rgba(255,255,255,.65); }
-    .os-stat-val {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700; color: #fff;
-    }
-    .os-stat-val.green { color: #6EE7B7; }
-    .os-btn-white {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #fff; color: var(--blue);
-      padding: 12px 24px; border-radius: 100px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 14px; font-weight: 700;
-      margin-top: 28px; transition: all .2s;
-      border: none; cursor: pointer;
-    }
-    .os-btn-white:hover {
-      background: rgba(255,255,255,.9);
-      transform: translateY(-1px);
-    }
-
-    /* ═══════════════════════════════════════════
-       SUPPORT SECTION
-    ═══════════════════════════════════════════ */
-    #support { background: var(--white); }
-    .support-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 60px; align-items: center;
-    }
-    .support-card {
-      background: linear-gradient(135deg, var(--green-light) 0%, #F0FDF4 100%);
-      border: 1px solid rgba(5,150,105,.15);
-      border-radius: var(--radius-lg);
-      padding: 36px;
+    .hstat {
+      background: var(--offwhite); border-radius: 10px; padding: 12px;
       text-align: center;
     }
-    .support-emoji { font-size: 48px; margin-bottom: 16px; }
-    .support-card h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 22px; font-weight: 800;
-      margin-bottom: 8px;
-    }
-    .support-card p {
-      font-size: 14px; color: var(--soft);
-      margin-bottom: 28px; line-height: 1.65;
-    }
-    .qr-box {
-      width: 160px; height: 160px;
-      background: var(--white);
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 12px; color: var(--muted);
-      gap: 8px;
-    }
-    .qr-box .qr-icon { font-size: 32px; }
-    .upi-handle {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 8px; padding: 10px 16px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 14px; font-weight: 700;
-      color: var(--blue); margin-bottom: 8px;
-      display: inline-block;
-    }
-    .qr-note {
-      font-size: 12px; color: var(--muted);
-      margin-bottom: 20px;
-    }
-    .support-trust {
-      font-size: 12px; color: var(--muted);
-      margin-top: 12px; display: flex;
-      align-items: center; justify-content: center; gap: 4px;
-    }
+    .hstat-val { font-size: 18px; font-weight: 700; color: var(--navy); }
+    .hstat-val.green { color: var(--emerald); }
+    .hstat-val.orange { color: var(--saffron); }
+    .hstat-lbl { font-size: 11px; color: var(--text-soft); margin-top: 2px; letter-spacing: .03em; }
 
-    /* ═══════════════════════════════════════════
-       COMMUNITY SECTION
-    ═══════════════════════════════════════════ */
-    #community { background: var(--bg); }
-    .comm-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
+    /* Floating badges on card */
+    .fbadge {
+      position: absolute; background: white;
+      border-radius: 12px; box-shadow: var(--shadow-md);
+      padding: 10px 16px; display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 600;
+    }
+    .fbadge.top-left { top: -20px; left: -20px; }
+    .fbadge.bot-right { bottom: -18px; right: -18px; }
+    .fbadge-icon { font-size: 20px; }
+
+    /* ── SOCIAL PROOF ── */
+    .social-proof {
+      padding: 20px 5%; background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+    .sp-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: center;
+      gap: 40px; flex-wrap: wrap;
+    }
+    .sp-item {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--text-mid); font-size: 14px; font-weight: 500;
+    }
+    .sp-icon { font-size: 20px; }
+    .sp-divider { width: 1px; height: 24px; background: var(--border); }
+
+    /* ── SECTION BASE ── */
+    section { padding: 80px 5%; }
+    .section-tag {
+      font-size: 12px; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--emerald);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 800; color: var(--navy);
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 16px; color: var(--text-mid);
+      line-height: 1.7; max-width: 560px;
+    }
+    .max-w { max-width: 1200px; margin: 0 auto; }
+    .text-center { text-align: center; }
+    .text-center .section-sub { margin: 0 auto; }
+
+    /* ── HOW IT WORKS ── */
+    .hiw { background: var(--offwhite); }
+    .hiw-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 48px;
+    }
+    .hiw-card {
+      background: white; border-radius: var(--radius);
+      padding: 28px; border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm); transition: all .25s;
+      position: relative; overflow: hidden;
+    }
+    .hiw-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .hiw-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--emerald), #00C883);
+    }
+    .hiw-card.orange::before { background: linear-gradient(90deg, var(--saffron), var(--gold)); }
+    .hiw-card.blue::before { background: linear-gradient(90deg, #1A6EDD, #38B6FF); }
+    .hiw-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px; font-weight: 900;
+      color: var(--border); line-height: 1;
+      margin-bottom: 12px;
+    }
+    .hiw-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 16px;
+    }
+    .hiw-icon.g { background: var(--emerald-lt); }
+    .hiw-icon.o { background: var(--saffron-lt); }
+    .hiw-icon.b { background: #EAF2FF; }
+    .hiw-h { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .hiw-p { font-size: 14px; color: var(--text-mid); line-height: 1.65; }
+
+    /* ── PRODUCTS ── */
+    .products-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 20px; margin-top: 48px;
     }
-    .comm-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      display: flex; gap: 20px; align-items: flex-start;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .comm-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-    .comm-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      display: flex; align-items: center;
-      justify-content: center; font-size: 20px;
-      flex-shrink: 0;
-    }
-    .comm-card h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 16px; font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .comm-card p { font-size: 14px; color: var(--soft); line-height: 1.6; }
-
-    /* ═══════════════════════════════════════════
-       CONTACT SECTION
-    ═══════════════════════════════════════════ */
-    #contact { background: var(--white); }
-    .contact-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 60px;
-    }
-    .contact-form {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 36px;
-    }
-    .contact-form h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 20px; font-weight: 800;
-      margin-bottom: 24px;
-    }
-    .form-group { margin-bottom: 18px; }
-    .form-group label {
-      display: block; font-size: 13px; font-weight: 600;
-      color: var(--text); margin-bottom: 6px;
-    }
-    .form-group input,
-    .form-group textarea {
-      width: 100%; padding: 12px 14px;
+    .prod-card {
+      border-radius: var(--radius); padding: 28px;
       border: 1.5px solid var(--border);
-      border-radius: 8px; font-family: 'Inter', sans-serif;
-      font-size: 14px; color: var(--text);
-      background: var(--white);
-      transition: border-color .2s, box-shadow .2s;
-      outline: none;
+      background: white; box-shadow: var(--shadow-sm);
+      transition: all .25s; cursor: pointer;
     }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(26,86,219,.1);
+    .prod-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--emerald); }
+    .prod-card.featured {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-md) 100%);
+      border-color: var(--navy); color: white;
     }
-    .form-group input.error { border-color: #DC2626; }
-    .form-group .err-msg {
-      font-size: 12px; color: #DC2626; margin-top: 4px; display: none;
-    }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .form-success {
-      display: none; text-align: center; padding: 24px;
-    }
-    .form-success .success-icon { font-size: 40px; margin-bottom: 12px; }
-    .form-success h4 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 18px; font-weight: 700; margin-bottom: 8px;
-    }
-    .form-success p { font-size: 14px; color: var(--soft); }
-    .contact-info { padding-top: 12px; }
-    .contact-info h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 24px; font-weight: 800; margin-bottom: 12px;
-    }
-    .contact-info p {
-      font-size: 15px; color: var(--soft);
-      margin-bottom: 32px; line-height: 1.7;
-    }
-    .info-item {
-      display: flex; align-items: center; gap: 14px;
-      padding: 16px; background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+    .prod-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--emerald);
       margin-bottom: 12px;
+    }
+    .prod-card.featured .prod-label { color: #4AE097; }
+    .prod-title { font-size: 19px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .prod-card.featured .prod-title { color: white; }
+    .prod-desc { font-size: 14px; color: var(--text-mid); line-height: 1.6; margin-bottom: 20px; }
+    .prod-card.featured .prod-desc { color: #8BA0B8; }
+    .prod-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 800; color: var(--navy);
+    }
+    .prod-card.featured .prod-price { color: var(--gold); }
+    .prod-period { font-size: 13px; color: var(--text-soft); font-weight: 400; }
+    .prod-feats { list-style: none; margin: 16px 0 20px; display: flex; flex-direction: column; gap: 8px; }
+    .prod-feats li {
+      font-size: 13px; color: var(--text-mid);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .prod-card.featured .prod-feats li { color: #8BA0B8; }
+    .prod-feats li::before {
+      content: '✓'; width: 18px; height: 18px;
+      background: var(--emerald-lt); color: var(--emerald);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; flex-shrink: 0;
+    }
+    .prod-card.featured .prod-feats li::before { background: rgba(0,168,107,.2); }
+    .prod-btn {
+      width: 100%; padding: 12px; border-radius: 10px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; transition: all .2s;
+      border: 1.5px solid var(--border); background: var(--offwhite);
+      color: var(--navy);
+    }
+    .prod-btn:hover { border-color: var(--emerald); color: var(--emerald); background: var(--emerald-lt); }
+    .prod-card.featured .prod-btn {
+      background: linear-gradient(135deg, var(--emerald), #00C883);
+      border: none; color: white;
+      box-shadow: 0 6px 18px rgba(0,168,107,.4);
+    }
+    .prod-card.featured .prod-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,168,107,.5); }
+
+    /* ── STATS ── */
+    .stats-section {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-md) 100%);
+      color: white; padding: 64px 5%;
+    }
+    .stats-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .stat-item {
+      text-align: center; padding: 28px 20px;
+      background: rgba(255,255,255,.05); border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.08);
+      transition: background .2s;
+    }
+    .stat-item:hover { background: rgba(255,255,255,.09); }
+    .stat-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px; font-weight: 900;
+      background: linear-gradient(135deg, #4AE097, #00C883);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      display: block;
+    }
+    .stat-val.orange {
+      background: linear-gradient(135deg, var(--gold), var(--saffron));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-lbl { font-size: 14px; color: rgba(255,255,255,.5); margin-top: 6px; }
+
+    /* ── TESTIMONIALS ── */
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-top: 48px;
+    }
+    .testi-card {
+      background: white; border-radius: var(--radius);
+      padding: 24px; border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm); transition: all .25s;
+    }
+    .testi-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 14px; }
+    .testi-text { font-size: 14px; color: var(--text-mid); line-height: 1.7; margin-bottom: 18px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px; color: white;
+    }
+    .testi-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+    .testi-role { font-size: 12px; color: var(--text-soft); }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      background: linear-gradient(135deg, #E6F7F1 0%, #EAF2FF 50%, #FFF8E7 100%);
+      text-align: center; padding: 80px 5%;
+    }
+    .cta-inner { max-width: 640px; margin: 0 auto; }
+    .cta-section .section-title { font-size: clamp(28px, 4vw, 44px); }
+    .cta-section .section-sub { margin: 0 auto 36px; }
+    .cta-form {
+      display: flex; gap: 12px; max-width: 480px; margin: 0 auto;
+    }
+    .cta-input {
+      flex: 1; padding: 14px 18px; border-radius: 12px;
+      border: 1.5px solid var(--border); font-size: 15px;
+      font-family: 'DM Sans', sans-serif; color: var(--navy);
+      outline: none; background: white;
       transition: border-color .2s;
     }
-    .info-item:hover { border-color: var(--blue); }
-    .info-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      display: flex; align-items: center;
-      justify-content: center; font-size: 18px;
-      flex-shrink: 0;
-    }
-    .info-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
-    .info-val {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 15px; font-weight: 700; color: var(--text);
-    }
+    .cta-input:focus { border-color: var(--emerald); }
+    .cta-note { font-size: 13px; color: var(--text-soft); margin-top: 14px; }
 
-    /* ═══════════════════════════════════════════
-       DISCLAIMER
-    ═══════════════════════════════════════════ */
-    .disclaimer {
-      background: #FFFBEB;
-      border-top: 1px solid #FDE68A;
-      border-bottom: 1px solid #FDE68A;
-      padding: 20px 0;
-    }
-    .disclaimer-inner {
-      display: flex; gap: 12px; align-items: flex-start;
-    }
-    .disc-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-    .disclaimer p {
-      font-size: 13px; color: #92400E; line-height: 1.6;
-    }
-
-    /* ═══════════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════════ */
+    /* ── FOOTER ── */
     footer {
-      background: var(--text);
-      padding: 52px 0 28px;
-      color: rgba(255,255,255,.7);
+      background: var(--navy); color: rgba(255,255,255,.6);
+      padding: 48px 5% 28px;
     }
-    .footer-top {
-      display: grid; grid-template-columns: 2fr 1fr 1fr;
-      gap: 48px; margin-bottom: 40px;
+    .foot-inner {
+      max-width: 1200px; margin: 0 auto;
     }
-    .footer-brand-main {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 18px; font-weight: 800;
-      color: #fff; margin-bottom: 4px;
+    .foot-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 40px;
     }
-    .footer-brand-sub {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 12px; font-weight: 600;
-      color: rgba(255,255,255,.4);
-      text-transform: uppercase; letter-spacing: .8px;
-      margin-bottom: 16px;
+    .foot-brand { }
+    .foot-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .foot-logo-badge {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--emerald), #00C883);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 12px; color: white;
     }
-    .footer-desc {
-      font-size: 14px; line-height: 1.7;
-      max-width: 320px;
+    .foot-logo-text { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: white; }
+    .foot-desc { font-size: 14px; line-height: 1.7; max-width: 260px; }
+    .foot-col h4 { font-size: 13px; font-weight: 700; color: white; letter-spacing: .08em; margin-bottom: 16px; text-transform: uppercase; }
+    .foot-col a {
+      display: block; font-size: 14px; color: rgba(255,255,255,.5);
+      text-decoration: none; margin-bottom: 10px; transition: color .2s;
     }
-    .footer-col h4 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 13px; font-weight: 700;
-      color: #fff; text-transform: uppercase;
-      letter-spacing: .8px; margin-bottom: 16px;
-    }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a {
-      font-size: 14px; color: rgba(255,255,255,.55);
-      transition: color .2s;
-    }
-    .footer-col a:hover { color: #fff; }
-    .footer-bottom {
+    .foot-col a:hover { color: var(--emerald); }
+    .foot-bottom {
       border-top: 1px solid rgba(255,255,255,.08);
-      padding-top: 24px;
-      display: flex; justify-content: space-between;
-      align-items: center; flex-wrap: wrap; gap: 12px;
+      padding-top: 24px; display: flex;
+      justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
     }
-    .footer-bottom p { font-size: 13px; }
-    .footer-domain {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700; color: rgba(255,255,255,.5);
-      font-size: 13px;
-    }
-    .footer-domain a { color: var(--teal); transition: color .2s; }
-    .footer-domain a:hover { color: #67E8F9; }
+    .foot-copy { font-size: 13px; }
+    .foot-disc { font-size: 12px; color: rgba(255,255,255,.3); max-width: 600px; line-height: 1.5; }
 
-    /* ═══════════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════════ */
-    @media (max-width: 900px) {
-      .nav-links, .nav-cta { display: none; }
-      .hamburger { display: flex; }
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero-visual { order: -1; }
-      .os-inner { grid-template-columns: 1fr; gap: 40px; }
-      .support-inner { grid-template-columns: 1fr; gap: 40px; }
-      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-      .why-grid { grid-template-columns: 1fr; }
-      .features-grid { grid-template-columns: 1fr 1fr; }
-      .comm-grid { grid-template-columns: 1fr; }
+    /* ── RESPONSIVE ── */
+    @media(max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-card-wrap { display: none; }
+      .hiw-grid, .products-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .foot-top { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
     }
-    @media (max-width: 640px) {
-      .section { padding: 64px 0; }
-      .features-grid { grid-template-columns: 1fr; }
-      .hero-btns { flex-direction: column; }
-      .hero-btns .btn { width: 100%; justify-content: center; }
-      .footer-bottom { flex-direction: column; text-align: center; }
+    @media(max-width: 600px) {
+      .hiw-grid, .products-grid, .testi-grid, .stats-grid { grid-template-columns: 1fr; }
+      .cta-form { flex-direction: column; }
+      .sp-divider { display: none; }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- ═══════════════════════════════════════════
-       HEADER
-  ═══════════════════════════════════════════ -->
-  <header id="main-header">
-    <div class="container">
-      <nav>
-        <!-- Brand -->
-        <a href="#home" class="brand">
-          <div class="brand-main">Let's Make India Grow<span class="brand-dot"> ●</span></div>
-          <div class="brand-sub">AlphaLense</div>
-        </a>
-
-        <!-- Nav links -->
-        <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#open-source">Open Source</a></li>
-          <li><a href="#support">Support</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-
-        <!-- CTA -->
-        <div class="nav-cta">
-          <a href="https://app.lmig.in" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:13px;padding:10px 18px;">
-            🚀 Launch App
-          </a>
-          <a href="#support" class="btn btn-green" style="font-size:13px;padding:10px 18px;">☕ Support</a>
-        </div>
-
-        <!-- Hamburger -->
-        <button class="hamburger" id="hamburger" aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
-      </nav>
-
-      <!-- Mobile menu -->
-      <div class="mobile-menu" id="mobile-menu">
-        <ul>
-          <li><a href="#home"        onclick="closeMobile()">Home</a></li>
-          <li><a href="#about"       onclick="closeMobile()">About</a></li>
-          <li><a href="#features"    onclick="closeMobile()">Features</a></li>
-          <li><a href="#open-source" onclick="closeMobile()">Open Source</a></li>
-          <li><a href="#support"     onclick="closeMobile()">Support</a></li>
-          <li><a href="#contact"     onclick="closeMobile()">Contact</a></li>
-        </ul>
-        <div class="mobile-btns">
-          <a href="https://app.lmig.in" target="_blank" rel="noopener" class="btn btn-primary" onclick="closeMobile()">🚀 Launch AlphaLense App</a>
-          <a href="#support" class="btn btn-green" onclick="closeMobile()">☕ Support the Project</a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-
-  <!-- ═══════════════════════════════════════════
-       HERO
-  ═══════════════════════════════════════════ -->
-  <section id="home">
-    <div class="container">
-      <div class="hero-inner">
-
-        <!-- Left: copy -->
-        <div class="hero-content">
-          <div class="hero-badge">
-            <span class="dot"></span>
-            Open-source · Free forever · Built in public
-          </div>
-
-          <h1 class="hero-title">
-            Invest with<br/>
-            <span class="highlight">Discipline.</span><br/>
-            Grow with India.
-          </h1>
-
-          <p class="hero-sub">
-            AlphaLense is a free, open-source investing MVP that helps ordinary
-            Indians think more systematically about markets, position sizing, and
-            rule-based decision-making.
-          </p>
-
-          <div class="hero-btns">
-            <a href="https://app.lmig.in" target="_blank" rel="noopener" class="btn btn-primary">
-              🚀 Launch AlphaLense App
-            </a>
-            <a href="#support" class="btn btn-green">
-              ☕ Buy a Coffee
-            </a>
-          </div>
-
-          <div class="hero-trust">
-            <span class="icon">✓</span>
-            Open-source investing MVP for disciplined market participation.
-            Available at <strong style="color:var(--blue);margin-left:4px;">www.lmig.in</strong>
-          </div>
-        </div>
-
-        <!-- Right: dashboard mockup -->
-        <div class="hero-visual">
-          <div style="position:relative; width:100%; max-width:420px;">
-            <div class="dash-card">
-              <div class="dash-header">
-                <div class="dash-title">📊 AlphaLense Dashboard</div>
-                <div class="dash-badge">Live</div>
-              </div>
-
-              <!-- Metrics -->
-              <div class="dash-metrics">
-                <div class="metric-box">
-                  <div class="metric-val up">+18.4%</div>
-                  <div class="metric-label">CAGR</div>
-                </div>
-                <div class="metric-box">
-                  <div class="metric-val blue">1,192</div>
-                  <div class="metric-label">Trades</div>
-                </div>
-                <div class="metric-box">
-                  <div class="metric-val teal">68.3%</div>
-                  <div class="metric-label">Win Rate</div>
-                </div>
-              </div>
-
-              <!-- Sparkline -->
-              <div class="spark-area">
-                <div class="spark-label">Portfolio Equity Curve</div>
-                <svg class="spark-svg" viewBox="0 0 380 64" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="spark-fill" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#059669" stop-opacity=".25"/>
-                      <stop offset="100%" stop-color="#059669" stop-opacity="0"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M0,52 C20,50 30,46 50,44 C70,42 80,48 100,40 C120,32 130,28 150,22 C170,16 180,18 200,14 C220,10 230,16 250,12 C270,8 280,4 300,6 C320,8 330,12 350,10 C365,8 375,6 380,5 L380,64 L0,64 Z"
-                    fill="url(#spark-fill)"/>
-                  <path d="M0,52 C20,50 30,46 50,44 C70,42 80,48 100,40 C120,32 130,28 150,22 C170,16 180,18 200,14 C220,10 230,16 250,12 C270,8 280,4 300,6 C320,8 330,12 350,10 C365,8 375,6 380,5"
-                    fill="none" stroke="#059669" stroke-width="2"/>
-                </svg>
-              </div>
-
-              <!-- Recent lots -->
-              <div class="lot-row">
-                <div>
-                  <div class="lot-sym">RELIANCE.NS</div>
-                  <div class="lot-date">Entry: 12 Jan 2024</div>
-                </div>
-                <div class="lot-pnl pos">+₹4,230</div>
-              </div>
-              <div class="lot-row">
-                <div>
-                  <div class="lot-sym">HDFCBANK.NS</div>
-                  <div class="lot-date">Entry: 18 Feb 2024</div>
-                </div>
-                <div class="lot-pnl pos">+₹2,780</div>
-              </div>
-              <div class="lot-row">
-                <div>
-                  <div class="lot-sym">ADANIENT.NS</div>
-                  <div class="lot-date">Entry: 3 Mar 2024</div>
-                </div>
-                <div class="lot-pnl neg">–₹890</div>
-              </div>
-            </div>
-
-            <!-- Floating badge -->
-            <div class="float-badge">
-              <div class="float-icon">🇮🇳</div>
-              <div class="float-text">
-                <strong>50 NSE Stocks</strong>
-                <span>Nifty 50 · Sector-wise</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ═══════════════════════════════════════════
-       APP LAUNCH BANNER
-  ═══════════════════════════════════════════ -->
-  <div style="background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 0;">
-    <div class="container">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
-        <div style="display:flex;align-items:center;gap:16px;">
-          <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--blue),var(--teal));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">▲</div>
-          <div>
-            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:17px;color:var(--text);">AlphaLense is live and free to use</div>
-            <div style="font-size:14px;color:var(--soft);margin-top:2px;">Backtest any NSE/BSE stock with real data · No login required · Open source</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-          <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">
-            <span style="width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span>
-            App is live
-          </div>
-          <a href="https://app.lmig.in" target="_blank" rel="noopener"
-            style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 14px rgba(26,86,219,.3);transition:all .2s;"
-            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(26,86,219,.4)'"
-            onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(26,86,219,.3)'">
-            🚀 Open AlphaLense App &nbsp;↗
-          </a>
-        </div>
-      </div>
-    </div>
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-track">
+    <span class="ticker-item">NIFTY 50 <span class="tick-up">▲ 22,147.50 (+1.2%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">SENSEX <span class="tick-up">▲ 73,088 (+0.9%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">RELIANCE <span class="tick-up">▲ ₹2,931 (+0.7%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">HDFC BANK <span class="tick-down">▼ ₹1,612 (-0.4%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">GOLD <span class="tick-up">▲ ₹72,450/10g (+0.3%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">USD/INR <span class="tick-down">▼ 83.42 (-0.1%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">NIFTY 50 <span class="tick-up">▲ 22,147.50 (+1.2%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">SENSEX <span class="tick-up">▲ 73,088 (+0.9%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">RELIANCE <span class="tick-up">▲ ₹2,931 (+0.7%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">HDFC BANK <span class="tick-down">▼ ₹1,612 (-0.4%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">GOLD <span class="tick-up">▲ ₹72,450/10g (+0.3%)</span></span>
+    <span class="ticker-item tick-sep">|</span>
+    <span class="ticker-item">USD/INR <span class="tick-down">▼ 83.42 (-0.1%)</span></span>
   </div>
+</div>
 
-
-  <!-- ═══════════════════════════════════════════
-       WHY THIS EXISTS
-  ═══════════════════════════════════════════ -->
-  <section id="about" class="section">
-    <div class="container">
-      <div class="reveal">
-        <div class="tag">Why This Exists</div>
-        <h2 class="section-title">Most people lose money because of<br/>process, not lack of information.</h2>
-        <p class="section-sub">
-          Markets are full of data. What's missing is a structured way to think,
-          decide, and act — without emotion or guesswork.
-        </p>
-      </div>
-
-      <div class="why-grid" style="margin-top:48px;">
-        <div class="why-card reveal reveal-delay-1">
-          <div class="why-icon" style="background:#FEF3C7;">🎲</div>
-          <h3>People Chase Fast Money</h3>
-          <p>Short-term greed, tips-based trading, and FOMO destroy wealth quietly. AlphaLense is built to counter that with process and patience.</p>
-        </div>
-        <div class="why-card reveal reveal-delay-2">
-          <div class="why-icon" style="background:#FEE2E2;">📉</div>
-          <h3>No Risk Management Framework</h3>
-          <p>Most retail investors have no defined entry, exit, or position sizing rules. One bad trade wipes out months of gains. We fix that.</p>
-        </div>
-        <div class="why-card reveal reveal-delay-3">
-          <div class="why-icon" style="background:#EDE9FE;">🔒</div>
-          <h3>Complex Tools Stay Locked Away</h3>
-          <p>Professional-grade strategy tools cost lakhs and require expert knowledge. India needs a simple, free, and open alternative.</p>
-        </div>
-        <div class="why-card reveal reveal-delay-4">
-          <div class="why-icon" style="background:#D1FAE5;">🌱</div>
-          <h3>India's Retail Investors Deserve Better</h3>
-          <p>With 10 crore+ demat accounts, India is investing at scale. The tools they use should match that ambition. AlphaLense is our answer.</p>
-        </div>
-      </div>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-badge">LMIG</div>
+      <span class="logo-text">Let's Make <span>India</span> Grow</span>
+    </a>
+    <div class="nav-links">
+      <a href="#how">How It Works</a>
+      <a href="#products">Products</a>
+      <a href="#academy">Academy</a>
+      <a href="#partners">Partners</a>
     </div>
-  </section>
-
-
-  <!-- ═══════════════════════════════════════════
-       WHAT ALPHALENSE DOES
-  ═══════════════════════════════════════════ -->
-  <section id="what" class="section" style="background:var(--bg);padding-top:0;">
-    <div class="container">
-      <div class="reveal">
-        <div class="tag">What AlphaLense Does</div>
-        <h2 class="section-title">A structured way to think about markets.<br/>Not a get-rich-quick tool.</h2>
-        <p class="section-sub">
-          AlphaLense is a rule-based, open-source strategy backtester.
-          It tests how a disciplined investing approach would have performed
-          on real NSE/BSE stocks — across your chosen time period.
-        </p>
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:56px;">
-        <div class="reveal reveal-delay-1">
-          <div style="display:flex;flex-direction:column;gap:16px;">
-            <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;gap:16px;align-items:flex-start;">
-              <div style="width:40px;height:40px;background:var(--blue-light);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📋</div>
-              <div>
-                <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;margin-bottom:4px;">Rule-Based Entry & Exit</div>
-                <div style="font-size:14px;color:var(--soft);">Defined buy triggers (5% step-down), exit rules (15% rise), and stop-loss (40% fall). No ambiguity, no emotion.</div>
-              </div>
-            </div>
-            <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;gap:16px;align-items:flex-start;">
-              <div style="width:40px;height:40px;background:var(--green-light);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⚖️</div>
-              <div>
-                <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;margin-bottom:4px;">Position Sizing Built In</div>
-                <div style="font-size:14px;color:var(--soft);">Choose a fixed amount, 1% of capital, or dynamic sizing. Know exactly how much you're risking before you deploy capital.</div>
-              </div>
-            </div>
-            <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;gap:16px;align-items:flex-start;">
-              <div style="width:40px;height:40px;background:var(--teal-light);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📅</div>
-              <div>
-                <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;margin-bottom:4px;">Historical Backtesting</div>
-                <div style="font-size:14px;color:var(--soft);">Run your strategy on years of real NSE/BSE data. See CAGR, Sharpe ratio, max drawdown, and monthly P&L before risking real money.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="reveal reveal-delay-2">
-          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;">
-            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:20px;">Strategy Performance Summary</div>
-            <div style="display:flex;flex-direction:column;gap:12px;">
-              <div style="display:flex;justify-content:space-between;padding:12px;background:var(--bg);border-radius:8px;">
-                <span style="font-size:14px;color:var(--soft);">Backtest Period</span>
-                <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;">2015 – 2025</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;padding:12px;background:var(--green-light);border-radius:8px;">
-                <span style="font-size:14px;color:var(--soft);">CAGR</span>
-                <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--green);">+18.4%</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;padding:12px;background:var(--bg);border-radius:8px;">
-                <span style="font-size:14px;color:var(--soft);">Win Rate</span>
-                <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--blue);">68.3%</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;padding:12px;background:var(--bg);border-radius:8px;">
-                <span style="font-size:14px;color:var(--soft);">Sharpe Ratio</span>
-                <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;">1.42</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;padding:12px;background:#FEF2F2;border-radius:8px;">
-                <span style="font-size:14px;color:var(--soft);">Max Drawdown</span>
-                <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#DC2626;">–22.1%</span>
-              </div>
-            </div>
-            <div style="margin-top:16px;padding:12px;background:var(--blue-light);border-radius:8px;font-size:12px;color:var(--blue);">
-              ⚠ Past performance is illustrative only. Not a guarantee of future returns.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ═══════════════════════════════════════════
-       KEY FEATURES
-  ═══════════════════════════════════════════ -->
-  <section id="features" class="section">
-    <div class="container">
-      <div class="reveal" style="text-align:center;">
-        <div class="tag">Key Features</div>
-        <h2 class="section-title">Everything you need to invest with discipline.</h2>
-        <p class="section-sub" style="margin:0 auto;">
-          Six focused capabilities designed for retail investors who want
-          structure, not speculation.
-        </p>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-card reveal reveal-delay-1">
-          <div class="feature-icon" style="background:var(--blue-light);">📋</div>
-          <h3>Rule-Based Workflow</h3>
-          <p>Every buy and sell follows a defined system. No discretion, no emotion — just consistent rules applied across thousands of historical candles.</p>
-        </div>
-        <div class="feature-card reveal reveal-delay-2">
-          <div class="feature-icon" style="background:var(--green-light);">📡</div>
-          <h3>Live Market Data</h3>
-          <p>Pulls real OHLCV data from Yahoo Finance for any NSE or BSE stock. Always up to date, no manual CSV uploads needed.</p>
-        </div>
-        <div class="feature-card reveal reveal-delay-3">
-          <div class="feature-icon" style="background:var(--teal-light);">🧠</div>
-          <h3>Better Decision Structure</h3>
-          <p>Know your max lots, stop-loss levels, and position size before you enter any trade. Decision support that makes you a better investor.</p>
-        </div>
-        <div class="feature-card reveal reveal-delay-1">
-          <div class="feature-icon" style="background:#FEF3C7;">🇮🇳</div>
-          <h3>Retail-Friendly Interface</h3>
-          <p>Built for ordinary Indians, not institutional traders. Clean, intuitive UI with sector-wise stock selection and preset Nifty 50 portfolios.</p>
-        </div>
-        <div class="feature-card reveal reveal-delay-2">
-          <div class="feature-icon" style="background:#F3E8FF;">🔓</div>
-          <h3>Open-Source Transparency</h3>
-          <p>Every line of strategy logic is visible and auditable. No black box, no hidden fees. You can see exactly how every decision is made.</p>
-        </div>
-        <div class="feature-card reveal reveal-delay-3">
-          <div class="feature-icon" style="background:#FEE2E2;">🤝</div>
-          <h3>Community-Driven</h3>
-          <p>Built in public, improved by feedback. Every suggestion, bug report, and idea from the community shapes what AlphaLense becomes next.</p>
-        </div>
-      </div>
-
-      <!-- App CTA below features -->
-      <div style="margin-top:48px;text-align:center;" class="reveal">
-        <div style="background:linear-gradient(135deg,var(--blue-light),var(--teal-light));border:1px solid rgba(26,86,219,.15);border-radius:var(--radius-lg);padding:40px 32px;">
-          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;margin-bottom:10px;">
-            Ready to see your strategy in action?
-          </div>
-          <p style="font-size:16px;color:var(--soft);margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">
-            Open AlphaLense, pick your stocks, set your capital, choose a date range and run your first backtest — free, in under 2 minutes.
-          </p>
-          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-            <a href="https://app.lmig.in" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:15px;padding:14px 32px;">
-              🚀 Launch AlphaLense — It's Free
-            </a>
-            <a href="#support" class="btn btn-outline" style="font-size:15px;padding:14px 32px;">
-              ☕ Support the Build
-            </a>
-          </div>
-          <div style="margin-top:16px;font-size:12px;color:var(--muted);">
-            No login · No credit card · No installation · Just open and run
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-  <section id="open-source" class="section">
-    <div class="container">
-      <div class="os-inner">
-        <div class="os-content">
-          <div class="tag" style="background:rgba(255,255,255,.15);color:#fff;">Open Source</div>
-          <h2 class="section-title">Built in public.<br/>Improved by the community.</h2>
-          <p class="section-sub">
-            AlphaLense is not a product built to be sold. It's an experiment
-            built to be shared — with every Indian who wants to invest better.
-          </p>
-          <ul class="os-points">
-            <li>
-              <span class="os-check">✓</span>
-              The full strategy engine and backtester is open for review
-            </li>
-            <li>
-              <span class="os-check">✓</span>
-              Community suggestions directly shape future features
-            </li>
-            <li>
-              <span class="os-check">✓</span>
-              No paywall, no subscription, no hidden charges — ever
-            </li>
-            <li>
-              <span class="os-check">✓</span>
-              You can test, break, improve, and share this freely
-            </li>
-            <li>
-              <span class="os-check">✓</span>
-              Contributions of ideas, testing, and encouragement are welcome
-            </li>
-          </ul>
-          <a href="#contact" class="os-btn-white">
-            🤝 Join the Community →
-          </a>
-        </div>
-
-        <div class="os-visual">
-          <div class="os-card">
-            <div class="os-card-title">📂 AlphaLense Open Stats</div>
-            <div class="os-stat-row">
-              <span class="os-stat-label">Strategy Logic</span>
-              <span class="os-stat-val">100% Public</span>
-            </div>
-            <div class="os-stat-row">
-              <span class="os-stat-label">Data Source</span>
-              <span class="os-stat-val">Yahoo Finance</span>
-            </div>
-            <div class="os-stat-row">
-              <span class="os-stat-label">NSE Stocks Supported</span>
-              <span class="os-stat-val green">50+</span>
-            </div>
-            <div class="os-stat-row">
-              <span class="os-stat-label">Investment Models</span>
-              <span class="os-stat-val green">3 Variants</span>
-            </div>
-            <div class="os-stat-row">
-              <span class="os-stat-label">Cost to Use</span>
-              <span class="os-stat-val green">₹0 Free</span>
-            </div>
-            <div class="os-stat-row">
-              <span class="os-stat-label">Version</span>
-              <span class="os-stat-val">MVP v4.1</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ═══════════════════════════════════════════
-       SUPPORT
-  ═══════════════════════════════════════════ -->
-  <section id="support" class="section">
-    <div class="container">
-      <div class="support-inner">
-        <div class="reveal">
-          <div class="tag green">Support the Work</div>
-          <h2 class="section-title">This is free. But building it isn't.</h2>
-          <p class="section-sub">
-            AlphaLense is a passion project built nights and weekends by one person
-            who believes ordinary Indians deserve better investing tools.
-          </p>
-          <p style="font-size:16px;color:var(--soft);margin-top:16px;line-height:1.75;">
-            If this tool has helped you think more clearly about your investments,
-            or if you believe in what we're building — a small coffee goes a
-            long way towards keeping this project alive, hosted, and improving.
-          </p>
-          <p style="font-size:15px;color:var(--soft);margin-top:16px;line-height:1.75;">
-            No pressure. No subscription. Just pure support if you'd like to.
-          </p>
-          <div style="margin-top:32px;padding:20px;background:var(--blue-light);border-radius:var(--radius);border:1px solid rgba(26,86,219,.15);">
-            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--blue);margin-bottom:8px;">What your support helps with:</div>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="font-size:13px;color:var(--soft);display:flex;gap:8px;align-items:center;">
-                <span style="color:var(--blue);">→</span> Hosting and server costs
-              </div>
-              <div style="font-size:13px;color:var(--soft);display:flex;gap:8px;align-items:center;">
-                <span style="color:var(--blue);">→</span> New features and improvements
-              </div>
-              <div style="font-size:13px;color:var(--soft);display:flex;gap:8px;align-items:center;">
-                <span style="color:var(--blue);">→</span> Keeping it free for everyone
-              </div>
-              <div style="font-size:13px;color:var(--soft);display:flex;gap:8px;align-items:center;">
-                <span style="color:var(--blue);">→</span> More stock coverage and analytics
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="reveal reveal-delay-2">
-          <div class="support-card">
-            <div class="support-emoji">☕</div>
-            <h3>Buy Me a Coffee</h3>
-            <p>Scan the QR or use the UPI handle below to send any amount. Every coffee counts.</p>
-
-            <!-- QR CODE PLACEHOLDER -->
-            <img src="qr-upi.png" alt="UPI QR Code"
-  style="width:160px;height:160px;border-radius:12px;margin:0 auto 20px;" />
-
-            
-            <!-- UPI HANDLE PLACEHOLDER -->
-            <div class="upi-handle">8178757794@sbi</div>
-            <div class="qr-note">Scan the QR or use the UPI handle to support the project.</div>
-
-            <a href="#" class="btn btn-green" style="width:100%;justify-content:center;font-size:15px;">
-              ☕ Buy a Coffee
-            </a>
-            <div class="support-trust">
-              <span>🔒</span>
-              Your support helps me keep building this open project.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ═══════════════════════════════════════════
-       COMMUNITY
-  ═══════════════════════════════════════════ -->
-  <section id="community" class="section" style="background:var(--bg);">
-    <div class="container">
-      <div class="reveal" style="text-align:center;">
-        <div class="tag teal">Community</div>
-        <h2 class="section-title">AlphaLense gets better with you.</h2>
-        <p class="section-sub" style="margin:0 auto;">
-          This is a living project. Every idea, test, suggestion, and
-          collaboration makes it better for all Indian investors.
-        </p>
-      </div>
-
-      <div class="comm-grid">
-        <div class="comm-card reveal reveal-delay-1">
-          <div class="comm-icon" style="background:var(--blue-light);">💡</div>
-          <div>
-            <h3>Share Your Ideas</h3>
-            <p>Have a strategy rule you'd like to test? A feature that would help your investing process? Tell us — we build from real user needs.</p>
-          </div>
-        </div>
-        <div class="comm-card reveal reveal-delay-2">
-          <div class="comm-icon" style="background:#FEE2E2;">🐛</div>
-          <div>
-            <h3>Report Issues</h3>
-            <p>Found a bug or something that doesn't look right? Let us know. Honest feedback from real users is how we make this reliable.</p>
-          </div>
-        </div>
-        <div class="comm-card reveal reveal-delay-3">
-          <div class="comm-icon" style="background:var(--green-light);">🤝</div>
-          <div>
-            <h3>Collaborate</h3>
-            <p>Are you a developer, designer, or finance professional who believes in this mission? Let's work together and build something meaningful.</p>
-          </div>
-        </div>
-        <div class="comm-card reveal reveal-delay-4">
-          <div class="comm-icon" style="background:#F3E8FF);">📢</div>
-          <div>
-            <h3>Spread the Word</h3>
-            <p>Know someone who would benefit from disciplined investing tools? Share AlphaLense. Growing the community is the biggest contribution.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ═══════════════════════════════════════════
-       CONTACT
-  ═══════════════════════════════════════════ -->
-  <section id="contact" class="section">
-    <div class="container">
-      <div class="reveal" style="margin-bottom:48px;">
-        <div class="tag">Get in Touch</div>
-        <h2 class="section-title">We'd love to hear from you.</h2>
-        <p class="section-sub">
-          Suggestions, collaborations, questions, feedback — all welcome.
-          We read every message.
-        </p>
-      </div>
-
-      <div class="contact-inner">
-
-        <!-- Form -->
-        <div class="reveal reveal-delay-1">
-          <div class="contact-form" id="contact-form-wrap">
-            <h3>Send a Message</h3>
-            <form id="contact-form" novalidate>
-              <div class="form-group">
-                <label for="name">Full Name *</label>
-                <input type="text" id="name" placeholder="Your full name" />
-                <div class="err-msg" id="name-err">Please enter your name.</div>
-              </div>
-              <div class="form-group">
-                <label for="mobile">Mobile Number *</label>
-                <input type="tel" id="mobile" placeholder="+91 XXXXX XXXXX" />
-                <div class="err-msg" id="mobile-err">Please enter a valid 10-digit mobile number.</div>
-              </div>
-              <div class="form-group">
-                <label for="email">Email Address *</label>
-                <input type="email" id="email" placeholder="you@example.com" />
-                <div class="err-msg" id="email-err">Please enter a valid email address.</div>
-              </div>
-              <div class="form-group">
-                <label for="query">Query / Suggestion *</label>
-                <textarea id="query" placeholder="Tell us what's on your mind…"></textarea>
-                <div class="err-msg" id="query-err">Please enter your message.</div>
-              </div>
-              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
-                Send Message →
-              </button>
-            </form>
-
-            <!-- Success state -->
-            <div class="form-success" id="form-success">
-              <div class="success-icon">✅</div>
-              <h4>Message Sent!</h4>
-              <p>Thank you for reaching out. We'll get back to you within 24–48 hours.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contact info -->
-        <div class="contact-info reveal reveal-delay-2">
-          <h3>Direct Contact</h3>
-          <p>
-            Prefer to reach out directly? We're always available on phone
-            or email. Don't hesitate.
-          </p>
-
-          <div class="info-item">
-            <div class="info-icon" style="background:var(--green-light);">📞</div>
-            <div>
-              <div class="info-label">Phone / WhatsApp</div>
-              <div class="info-val">+91 81787 57794</div>
-            </div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-icon" style="background:var(--blue-light);">✉️</div>
-            <div>
-              <div class="info-label">Email</div>
-              <div class="info-val">letsmakeindiagrow@gmail.com</div>
-            </div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-icon" style="background:var(--teal-light);">🌐</div>
-            <div>
-              <div class="info-label">Website</div>
-              <div class="info-val">www.lmig.in</div>
-            </div>
-          </div>
-
-          <div style="margin-top:32px;padding:20px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);">
-            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;margin-bottom:8px;font-size:15px;">
-              Looking for partnerships?
-            </div>
-            <p style="font-size:13px;color:var(--soft);line-height:1.65;">
-              If you're a fintech company, SEBI-registered advisor, financial educator,
-              or developer who wants to collaborate — we'd love to talk.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ═══════════════════════════════════════════
-       DISCLAIMER
-  ═══════════════════════════════════════════ -->
-  <div class="disclaimer">
-    <div class="container">
-      <div class="disclaimer-inner">
-        <div class="disc-icon">⚠️</div>
-        <p>
-          <strong>Disclaimer:</strong> AlphaLense is intended for educational and informational purposes only.
-          It is not investment advice, research advice, or a return-guarantee product.
-          Past backtest results do not guarantee future performance. Users should apply independent
-          judgment, conduct their own research, and maintain proper risk management before making
-          any investment decisions. <strong>Let's Make India Grow</strong> and <strong>AlphaLense</strong>
-          are not registered investment advisors.
-        </p>
-      </div>
-    </div>
+    <button class="nav-cta">Join Free →</button>
   </div>
+</nav>
 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag fade-up">
+        <div class="hero-tag-dot"></div>
+        India's AI-Powered Finance Intelligence Platform
+      </div>
+      <h1 class="fade-up delay-1">
+        Smarter Indians.<br/>
+        <em>Stronger India.</em>
+      </h1>
+      <p class="hero-sub fade-up delay-2">
+        Weekly AI-generated stock reports, free finance tools, and expert-grade investing insights — built for every Indian who wants to build real wealth, not just survive.
+      </p>
+      <div class="hero-actions fade-up delay-3">
+        <button class="btn-primary">Get Free Weekly Report ↗</button>
+        <button class="btn-secondary">Explore Tools →</button>
+      </div>
+    </div>
 
-  <!-- ═══════════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════════ -->
-  <footer>
-    <div class="container">
-      <div class="footer-top">
+    <!-- Hero visual card -->
+    <div class="hero-card-wrap fade-up delay-4">
+      <div class="fbadge top-left">
+        <span class="fbadge-icon">📈</span>
         <div>
-          <div class="footer-brand-main">Let's Make India Grow</div>
-          <div class="footer-brand-sub">AlphaLense by Let's Make India Grow</div>
-          <p class="footer-desc">
-            Built in public for disciplined investing and long-term thinking.
-            A free, open-source MVP for every Indian who believes in process
-            over speculation.
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Product</h4>
-          <ul>
-            <li><a href="https://app.lmig.in" target="_blank" rel="noopener">🚀 Launch App</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#what">How It Works</a></li>
-            <li><a href="#open-source">Open Source</a></li>
-            <li><a href="#support">Support Us</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Connect</h4>
-          <ul>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#community">Community</a></li>
-            <li><a href="mailto:letsmakeindiagrow@gmail.com">letsmakeindiagrow@gmail.com</a></li>
-            <li><a href="tel:+918178757794">+91 81787 57794</a></li>
-          </ul>
+          <div style="font-size:13px;font-weight:700;color:#0A2540">Portfolio Up</div>
+          <div style="font-size:12px;color:#00A86B;font-weight:600">+18.4% this year</div>
         </div>
       </div>
-
-      <div class="footer-bottom">
-        <p>© 2025 Let's Make India Grow. All rights reserved.</p>
-        <div class="footer-domain">
-          <a href="https://www.lmig.in">www.lmig.in</a>
+      <div class="hero-card">
+        <div class="hcard-header">
+          <div class="hcard-title">LMIG AI Weekly Report</div>
+          <div class="hcard-badge">Live ●</div>
         </div>
-        <p style="font-size:12px;color:rgba(255,255,255,.3);">
-          Not SEBI registered. For educational use only.
-        </p>
+        <div class="hcard-chart">
+          <div class="bar" style="height:45%"></div>
+          <div class="bar" style="height:60%"></div>
+          <div class="bar" style="height:52%"></div>
+          <div class="bar accent" style="height:38%"></div>
+          <div class="bar" style="height:70%"></div>
+          <div class="bar" style="height:65%"></div>
+          <div class="bar" style="height:80%"></div>
+          <div class="bar accent" style="height:55%"></div>
+          <div class="bar" style="height:90%"></div>
+          <div class="bar" style="height:85%"></div>
+        </div>
+        <div class="hcard-stats">
+          <div class="hstat">
+            <div class="hstat-val green">847</div>
+            <div class="hstat-lbl">Stocks Analysed</div>
+          </div>
+          <div class="hstat">
+            <div class="hstat-val orange">12</div>
+            <div class="hstat-lbl">Top Picks</div>
+          </div>
+          <div class="hstat">
+            <div class="hstat-val">98%</div>
+            <div class="hstat-lbl">AI Accuracy</div>
+          </div>
+        </div>
+      </div>
+      <div class="fbadge bot-right">
+        <span class="fbadge-icon">🇮🇳</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#0A2540">24,000+ Indians</div>
+          <div style="font-size:12px;color:#8BA0B8">already growing</div>
+        </div>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
 
+<!-- SOCIAL PROOF -->
+<div class="social-proof">
+  <div class="sp-inner">
+    <div class="sp-item"><span class="sp-icon">🏆</span> Trusted by 24,000+ Indian investors</div>
+    <div class="sp-divider"></div>
+    <div class="sp-item"><span class="sp-icon">📊</span> NSE + BSE data every week</div>
+    <div class="sp-divider"></div>
+    <div class="sp-item"><span class="sp-icon">🤖</span> Powered by GPT-4o AI</div>
+    <div class="sp-divider"></div>
+    <div class="sp-item"><span class="sp-icon">🔒</span> Not SEBI Advice — Educational Platform</div>
+  </div>
+</div>
 
-  <!-- ═══════════════════════════════════════════
-       JAVASCRIPT
-  ═══════════════════════════════════════════ -->
-  <script>
-    // ── Sticky header shadow ──────────────────
-    const header = document.getElementById('main-header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 10);
-    });
+<!-- HOW IT WORKS -->
+<section class="hiw" id="how">
+  <div class="max-w text-center">
+    <div class="section-tag">How LMIG Works</div>
+    <h2 class="section-title">Built on AI. Delivered to You.<br/>Every Single Week.</h2>
+    <p class="section-sub">No jargon. No noise. Just clean, AI-processed financial intelligence — delivered automatically so you can make smarter decisions.</p>
+    <div class="hiw-grid">
 
-    // ── Mobile menu ───────────────────────────
-    const hamburger   = document.getElementById('hamburger');
-    const mobileMenu  = document.getElementById('mobile-menu');
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-    });
-    function closeMobile() {
-      mobileMenu.classList.remove('open');
-    }
-    // Close on outside click
-    document.addEventListener('click', e => {
-      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target))
-        closeMobile();
-    });
+      <div class="hiw-card">
+        <div class="hiw-num">01</div>
+        <div class="hiw-icon g">🔍</div>
+        <div class="hiw-h">AI Scans the Market</div>
+        <div class="hiw-p">Every Sunday, our system scans 800+ NSE/BSE stocks using live data from Yahoo Finance and NSE APIs. No human bias. Pure data.</div>
+      </div>
 
-    // ── Scroll reveal ─────────────────────────
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    reveals.forEach(el => observer.observe(el));
+      <div class="hiw-card orange">
+        <div class="hiw-num">02</div>
+        <div class="hiw-icon o">🧠</div>
+        <div class="hiw-h">GPT-4o Writes the Report</div>
+        <div class="hiw-p">Our AI engine processes the data, spots patterns, ranks opportunities, and writes a crisp 8-page report — in plain English, built for Indians.</div>
+      </div>
 
-    // ── Contact form validation ───────────────
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      let valid = true;
+      <div class="hiw-card blue">
+        <div class="hiw-num">03</div>
+        <div class="hiw-icon b">📬</div>
+        <div class="hiw-h">Delivered to Your Inbox</div>
+        <div class="hiw-p">Monday morning. Your report is waiting. Read it in 10 minutes. Make informed decisions. Build wealth week by week.</div>
+      </div>
 
-      const name   = document.getElementById('name');
-      const mobile = document.getElementById('mobile');
-      const email  = document.getElementById('email');
-      const query  = document.getElementById('query');
+    </div>
+  </div>
+</section>
 
-      // Reset errors
-      ['name','mobile','email','query'].forEach(id => {
-        document.getElementById(id).classList.remove('error');
-        document.getElementById(id + '-err').style.display = 'none';
-      });
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-val">24K+</span>
+      <div class="stat-lbl">Indian Subscribers</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val orange">₹2.1Cr</span>
+      <div class="stat-lbl">Portfolio Value Tracked</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val">800+</span>
+      <div class="stat-lbl">Stocks Analysed Weekly</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val orange">98%</span>
+      <div class="stat-lbl">Subscriber Satisfaction</div>
+    </div>
+  </div>
+</div>
 
-      // Validate name
-      if (!name.value.trim()) {
-        name.classList.add('error');
-        document.getElementById('name-err').style.display = 'block';
-        valid = false;
-      }
-      // Validate mobile (10 digits)
-      const mob = mobile.value.replace(/\D/g, '');
-      if (mob.length < 10) {
-        mobile.classList.add('error');
-        document.getElementById('mobile-err').style.display = 'block';
-        valid = false;
-      }
-      // Validate email
-      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRe.test(email.value.trim())) {
-        email.classList.add('error');
-        document.getElementById('email-err').style.display = 'block';
-        valid = false;
-      }
-      // Validate query
-      if (!query.value.trim()) {
-        query.classList.add('error');
-        document.getElementById('query-err').style.display = 'block';
-        valid = false;
-      }
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="max-w text-center">
+    <div class="section-tag">LMIG Products</div>
+    <h2 class="section-title">Everything You Need to<br/>Invest Smarter</h2>
+    <p class="section-sub">From free tools to premium intelligence — LMIG has a product for every stage of your wealth journey.</p>
+    <div class="products-grid">
 
-      if (valid) {
-        // ── Brevo (Sendinblue) transactional email ────────────────
-        const BREVO_API_KEY  = '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';   // 🔑 Replace with your Brevo API key
-        const TO_EMAIL       = 'letsmakeindiagrow@gmail.com'; // 📩 Email where you want to receive submissions
-        const FROM_EMAIL     = 'no-reply@lmig.in';             // 📤 Must be a verified sender in Brevo
-        const FROM_NAME      = 'AlphaLense Contact Form';
+      <div class="prod-card">
+        <div class="prod-label">Free Forever</div>
+        <div class="prod-title">LMIG Finance Tools</div>
+        <div class="prod-desc">AI-powered SIP calculator, MF ranker, and debt/equity allocator. Free, instant, no login required.</div>
+        <div class="prod-price">₹0 <span class="prod-period">/ always</span></div>
+        <ul class="prod-feats">
+          <li>AI SIP Forecast Tool</li>
+          <li>Mutual Fund Ranker</li>
+          <li>Debt vs Equity Allocator</li>
+        </ul>
+        <button class="prod-btn">Use Free Tools →</button>
+      </div>
 
-        const submitBtn = document.querySelector('#contact-form button[type="submit"]');
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending…';
+      <div class="prod-card featured">
+        <div class="prod-label">Most Popular</div>
+        <div class="prod-title">LMIG Weekly Intelligence</div>
+        <div class="prod-desc">India's only AI-written weekly stock report. 8 pages. 12 top picks. Every Monday morning.</div>
+        <div class="prod-price">₹499 <span class="prod-period">/ month</span></div>
+        <ul class="prod-feats">
+          <li>Weekly AI Stock Report (8 pages)</li>
+          <li>12 Top NSE/BSE Picks</li>
+          <li>Macro & Sector Analysis</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <button class="prod-btn">Start Free Trial →</button>
+      </div>
 
-        const payload = {
-          sender: { name: FROM_NAME, email: FROM_EMAIL },
-          to: [{ email: TO_EMAIL, name: 'Let\'s Make India Grow' }],
-          replyTo: { email: email.value.trim(), name: name.value.trim() },
-          subject: `New Contact Form Submission from ${name.value.trim()}`,
-          htmlContent: `
-            <h2 style="color:#1A56DB;font-family:sans-serif;">New message from AlphaLense Contact Form</h2>
-            <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:15px;">
-              <tr><td style="padding:10px;border:1px solid #E2E8F0;background:#F8FAFF;font-weight:bold;width:160px;">Full Name</td>
-                  <td style="padding:10px;border:1px solid #E2E8F0;">${name.value.trim()}</td></tr>
-              <tr><td style="padding:10px;border:1px solid #E2E8F0;background:#F8FAFF;font-weight:bold;">Mobile</td>
-                  <td style="padding:10px;border:1px solid #E2E8F0;">${mobile.value.trim()}</td></tr>
-              <tr><td style="padding:10px;border:1px solid #E2E8F0;background:#F8FAFF;font-weight:bold;">Email</td>
-                  <td style="padding:10px;border:1px solid #E2E8F0;"><a href="mailto:${email.value.trim()}">${email.value.trim()}</a></td></tr>
-              <tr><td style="padding:10px;border:1px solid #E2E8F0;background:#F8FAFF;font-weight:bold;">Query / Suggestion</td>
-                  <td style="padding:10px;border:1px solid #E2E8F0;">${query.value.trim().replace(/\n/g, '<br>')}</td></tr>
-            </table>
-            <p style="font-size:12px;color:#94A3B8;margin-top:24px;">Sent from AlphaLense contact form at www.lmig.in</p>
-          `
-        };
+      <div class="prod-card">
+        <div class="prod-label">For Professionals</div>
+        <div class="prod-title">LMIG Pro — Advisor Suite</div>
+        <div class="prod-desc">White-label AI reports and tools for financial advisors, RIAs, and wealth managers. Your brand. Our intelligence.</div>
+        <div class="prod-price">₹15,000 <span class="prod-period">/ month</span></div>
+        <ul class="prod-feats">
+          <li>White-label branded reports</li>
+          <li>Custom AI chatbot for clients</li>
+          <li>Social content automation</li>
+        </ul>
+        <button class="prod-btn">Book a Demo →</button>
+      </div>
 
-        fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'api-key': BREVO_API_KEY
-          },
-          body: JSON.stringify(payload)
-        })
-        .then(res => {
-          if (res.ok) {
-            document.getElementById('contact-form').style.display = 'none';
-            document.getElementById('form-success').style.display = 'block';
-          } else {
-            return res.json().then(err => { throw new Error(err.message || 'API error'); });
-          }
-        })
-        .catch(err => {
-          console.error('Brevo error:', err);
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Message →';
-          alert('Oops! Something went wrong. Please try again or email us directly at letsmakeindiagrow@gmail.com');
-        });
-      }
-    });
+    </div>
+  </div>
+</section>
 
-    // ── Active nav link on scroll ─────────────
-    const sections = document.querySelectorAll('section[id], div[id="open-source"]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(sec => {
-        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
-      });
-      navLinks.forEach(link => {
-        link.style.color = link.getAttribute('href') === '#' + current
-          ? 'var(--blue)' : '';
-        link.style.fontWeight = link.getAttribute('href') === '#' + current
-          ? '600' : '';
-      });
-    });
-  </script>
+<!-- TESTIMONIALS -->
+<section style="background:var(--offwhite);">
+  <div class="max-w text-center">
+    <div class="section-tag">What India Is Saying</div>
+    <h2 class="section-title">Real People. Real Results.</h2>
+    <p class="section-sub">From first-time investors to seasoned traders — LMIG is changing how India thinks about money.</p>
+    <div class="testi-grid">
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"I used to spend hours reading stock news. Now LMIG sends me everything I need on Monday. My portfolio is up 22% since I started following the picks."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#00A86B,#00C883)">R</div>
+          <div>
+            <div class="testi-name">Rahul Mehta</div>
+            <div class="testi-role">Software Engineer, Pune</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"As a financial advisor, I use LMIG Pro to send weekly reports to my 200+ clients. It saves me 15 hours a week. My clients think I'm a genius."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#FF6B00,#F5A623)">P</div>
+          <div>
+            <div class="testi-name">Priya Sharma</div>
+            <div class="testi-role">SEBI RIA, Mumbai</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Mujhe pehle samajh hi nahi aata tha kahan invest karein. LMIG ke reports padhke clear ho gaya. Ab main confidently SIP aur direct stocks dono kar raha hoon."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#1A6EDD,#38B6FF)">A</div>
+          <div>
+            <div class="testi-name">Arjun Singh</div>
+            <div class="testi-role">Govt. Employee, Lucknow</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="join">
+  <div class="cta-inner">
+    <div class="section-tag" style="text-align:center">Join the Movement</div>
+    <h2 class="section-title">India's Wealth Revolution<br/>Starts With You</h2>
+    <p class="section-sub">Get your first AI stock report free. No credit card. No jargon. Just clarity.</p>
+    <div class="cta-form">
+      <input class="cta-input" type="email" placeholder="Enter your email address" />
+      <button class="btn-primary">Get Free Report →</button>
+    </div>
+    <div class="cta-note">🔒 No spam. Unsubscribe anytime. Not SEBI investment advice — for educational use only.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="foot-logo">
+          <div class="foot-logo-badge">LMIG</div>
+          <div class="foot-logo-text">lmig.in</div>
+        </div>
+        <div class="foot-desc">AI-powered financial intelligence for every Indian. Smarter investors. Stronger nation.</div>
+      </div>
+      <div class="foot-col">
+        <h4>Products</h4>
+        <a href="#">Weekly Report</a>
+        <a href="#">Finance Tools</a>
+        <a href="#">LMIG Academy</a>
+        <a href="#">LMIG Pro</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Press</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Connect</h4>
+        <a href="#">Twitter / X</a>
+        <a href="#">Telegram</a>
+        <a href="#">YouTube</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-copy">© 2024 LMIG — Let's Make India Grow. All rights reserved.</div>
+      <div class="foot-disc">⚠️ Disclaimer: LMIG is an educational platform. Content is AI-generated and for informational purposes only. Not registered with SEBI. Not investment advice. Please consult a qualified financial advisor before investing.</div>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
